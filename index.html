@@ -266,57 +266,75 @@ def element_in_array(array, element):
             return True
     return False
 
-ARR = range(1,1000000)
-%timeit element_in_array(ARR, 123456)
----------TODO------------
+>>> ARR = range(1,1000000)
+>>> %timeit element_in_array(ARR, 123456)
+100 loops, best of 3: 2.59 ms per loop
 						```
 						<div class='fragment'>
 						```python
-%timeit 123456 in ARR
----------TODO------------
-# xxx times faster
+def element_in_array_index(array, element):
+	try:
+		array.index(element)
+		return True
+	except ValueError:
+		return False
+>>> %timeit element_in_array_index(ARR,123456)
+1000 loops, best of 3: 1.33 ms per loop
+# almost 2 times faster
+						```
+						</div>
+						<div class='fragment'>
+						```python
+>>> %timeit 123456 in ARR
+1000 loops, best of 3: 1.08 ms per loop
+# more than 2 times faster
 						```
 						</div>
 						Note:
 						Let say you have a list and you want to find if an element is in that list.
-						Most of you know that using this loop is not a best solution ...
-						$$ ... because there is this "in" operator that is made for those kind of checks.
+						Most of you know that using this loop is not a best solution
+						$$
+						You can instead use the index function together with some exception handling.
+						It is faster and more pythonic because it is using one of the fundamental python rules: "ask for forgiveness, not for permission".
+						$$
+						But you can simplify your code to just one line using the "in" operator.
+						It is even faster (especially in case that the element we are looking for does not exist in the list) and it is more simple to understand.
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
 						#### Check if element is in a list
 						```python
-def list_check(arr):
-		return (1 in arr and 100000 in arr and 500000 in arr)
+def list_check(l):
+	return (1 in l and 100000 in l and 500000 in l)
 
 def set_check(s):
-		return (1 in s and 100000 in s and 500000 in arr)
+	return (1 in s and 100000 in s and 500000 in s)
 						```
 						<div class='fragment'>
 						```python
-ARR = range(1,1000000)
-S = set(range(1,1000000))
-%timeit list_check(ARR)
------------TODO - measure
-%timeit set_check(S)
------------TODO - measure
-# xxx times faster
+>>> ARR = range(1,1000000)
+>>> S = set(ARR)
+>>> %timeit list_check(ARR)
+100 loops, best of 3: 5.57 ms per loop
+>>> %timeit set_check(S)
+10000000 loops, best of 3: 165 ns per loop
+# 33 000 times faster
 						```
 						</div>
 						<div class='fragment'>
 						```python
-%timeit range(1,1000000)
------------TODO - measure
-%timeit set(range(1,1000000))
------------TODO - measure
-# xxx times slower :(
+>>> %timeit 123456 in range(1,1000000)
+10 loops, best of 3: 18.6 ms per loop
+>>> %timeit 123456 in set(range(1,1000000))
+10 loops, best of 3: 92.3 ms per loop
+# almost 5 times slower :(
 						```
 						</div>
 						Note:
-						But what you might not know is that if you are checking for the list membership often, it is faster to convert the list to a set.
+						If you are checking if an element belongs to a list often, you might be interested in converting your list to a set.
 						$$ The lookup time inside a set is constant ...
-						$$ ... but it comes with a price of small overhead to convert the list to a set.
+						$$ ... but it comes with a price of an overhead to convert a list to a set.
 					</script>
 				</section>
 				<section data-markdown>
@@ -330,18 +348,19 @@ S = set(range(1,1000000))
 									unique.append(element)
 							return unique
 
-ARR = range(1,100001) * 10 # 1 000 000 elements with duplicates
-%timeit remove_duplicates(ARR)
----------TODO--SLOOOOOW-----------
+ARR = range(1,10001) * 10 # 100 000 elements with duplicates
+>>> %timeit remove_duplicates(ARR)
+1 loops, best of 3: 3.27 s per loop
 						```
 						<div class='fragment'>
 						```python
-%timeit set(ARR)
----------TODO--FAST-----------
+>>> %timeit set(ARR)
+1000 loops, best of 3: 1.12 ms per loop
+# almost 3 000 times faster
 						```
 						</div>
 						Note:
-						Speaking of sets, they have some other cool use cases.
+						Speaking of sets, they have some other cool features.
 						$$ They are blazingly fast when it comes to removing duplicates from a collection of items.
 						Not to mention how simple your code looks now.
 					</script>
@@ -350,27 +369,25 @@ ARR = range(1,100001) * 10 # 1 000 000 elements with duplicates
 					<script type="text/template">
 						#### Check if one list contain another
 						```python
-def check_if_contains_arr(big_array, small_array):
-		for el in small_array:
-			if el not in big_array:
-				return False
-		return True
-ARR = range(1,1000000)
-SMALL_ARR = range(1,10000)
-%timeit check_if_contains_arr(ARR, SMALL_ARR)
----------TODO--SLOOOOOW-----------
-    				```
-						<div class='fragment'>
-						```python
-S = set(range(1,1000000))
-SMALL_S = set(range(1,10000))
-%timeit S.issubset(SMALL_S)
----------TODO--FAST-----------
+def check_if_subset(big_array, small_array):
+	for el in small_array:
+		if el not in big_array:
+			return False
+	return True
+>>> ARR = range(1,1000000)
+>>> SMALL_ARR = range(1,10000)
+>>> %timeit check_if_subset(ARR, SMALL_ARR)
+1 loops, best of 3: 316 ms per loop
+
+>>> S = set(range(1,1000000))
+>>> SMALL_S = set(range(1,10000))
+>>> %timeit S.issubset(SMALL_S)
+10000000 loops, best of 3: 60.3 ns per loop
+# 5 000 0000 times faster
 						```
-						</div>
 						Note:
 						 They have a lot of cool functions that you can use to check for union, intersection or difference, so please don't use loops for that.
-						 For example, if you want to check if one collection of items contains a specific subset ..$$.. you have a set function for that that is faster and more concise.'
+						 For example, if you want to check if one collection of items contains a specific subset you have a issubset function for that, which is faster and more concise.'
 					</script>
 				</section>
 
