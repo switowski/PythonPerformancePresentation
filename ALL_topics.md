@@ -6,6 +6,25 @@
     Python 2.7.10 contains 76 built-in variables [source](https://docs.python.org/2/library/functions.html) - you won't need all of them (I don't remember when was the list time - if ever - I used _basestring()_, _execfile()_ or _reload()_), but it will take you just a moment to take a look at that list from time to time and keep it in the back of your head. If you want some more cool functions, there is the [itertools](https://docs.python.org/release/2.7.2/library/itertools.html) module that contains _fast, memory efficient tools that are useful by themselves or in combination_
     - _It's better to beg for forgiveness than to ask for permission_ give some examples where a code with exceptions handling is faster than code with __if__ statements
     - Mutable defaults: don't do stuff like __def foo(element, x=[])__, you will spend a lot of time debugging this error. Use **def foo(element, x=None):;if x in None:; x = []**
+* Control flow:
+    - Loops:
+        + You almost never need to use the **for** loop. Map/filter/reduce (functions are better solution. List comprehensions are the best solution.
+        + If the body of a loop is simple, the interpreter overhead for the **for** loop itself can be quite big - in this case you can use **map()**. Map is _a for loop moved into C code_.[^1]
+        + It's faster to perform an operation 1000 times inside a function, than calling the function 1000 times, for example:  
+        x = 0  
+        def do(num):  
+        &nbsp;global x  
+        &nbsp;x =+ 1  
+        for num in range(1000):  
+        &nbsp;do(num)  
+        is slower than:  
+        x = 0  
+        def do():  
+        &nbsp;global x  
+        &nbsp;for num in range(1000):  
+        &nbsp;&nbsp;x =+ 1  
+        do().[^1]
+        + Don't make loops like that: **for i in range(0,len(list)):**. If you need a list with index use the enumerate() function
 * Operators:
     - If checking for True/False the fastest way is __if element__ (vs __if element is True__ or __if element == True__)
 * Structures:
@@ -23,31 +42,18 @@
             * Removing duplicates - you get it for free if you convert list to a set (but if the order is important use [OrderedSet](http://code.activestate.com/recipes/576694/))
             * Sets have a lot of useful functions for checking the intersection, union, difference, sub- and super-sets that you don't have in lists: Give a few examples.
     - Dictionaries:
+        + Lookup time is constant (same as for sets), so it's faster than with lists
         + Initializing a dictionary: __d = {} vs d = dict()__ (first one is faster, but compare it with different Python compilers)
         + To get an element from the dictionary use __dict.get(key)__ function instead of doing __if key in dict: dict[key]__
         + Example of dictionary comprehension (for example to get a dictionary {number: number**2}) vs for loop
 * Strings:
     - If you need to create a string from a list of words, it's faster to use **s = "".join(list)** than **for x in list: s += x**. The same if you need to call a function on each element of list: this **slist = [some_function(elt) for elt in somelist]; s = "".join(slist)** is faster than the for loop.[^1]
     - Using string formatting is faster than string concatenation: **out = "<html>%s%s%s%s</html>" % (head, prologue, query, tail)** is better than **out = "<html>" + head + prologue + query + tail + "</html>"** (and using **out = "<html>%(head)s%(prologue)s%(query)s%(tail)s</html>" % locals()** is more clear).[^1]
-* Loops:
-    - You almost never need to use the **for** loop. Map/filter/reduce (functions are better solution. List comprehensions are the best solution.
-    - If the body of a loop is simple, the interpreter overhead for the **for** loop itself can be quite big - in this case you can use **map()**. Map is _a for loop moved into C code_.[^1]
-    - It's faster to perform an operation 1000 times inside a function, than calling the function 1000 times, for example:  
-        x = 0  
-        def do(num):  
-        &nbsp;global x  
-        &nbsp;x =+ 1  
-        for num in range(1000):  
-        &nbsp;do(num)  
-    is slower than:  
-        x = 0  
-        def do():  
-        &nbsp;global x  
-        &nbsp;for num in range(1000):  
-        &nbsp;&nbsp;x =+ 1  
-        do().[^1]
 * Lambdas:
     - There is usually no difference between using a lambda and a named function, so often named function is a better solution because it's more readable. Lambdas are nice as a short, simple one-liners that don't require a lot of explanation.
+    - Also, according to PEP-8 you should not assign lambda to a variable:  
+    Good: **def f(x): return 2*x**  
+    Bad: **f = lambda x: 2*x** - this is a duplication of def functionality and can cause confusion ([source](http://stackoverflow.com/questions/25010167/e731-do-not-assign-a-lambda-expression-use-a-def))
 * Generators:
     - In short, generator expressions are like list comprehension but they don't generate the whole list at once (so they are faster if you don't need the whole list).
     - Example of finding the first element matching the criteria: comparing list comprehension (it's a totally wrong approach here, since we don't need the whole list) vs for loop (it's faster and seems like a good solution) vs generator (same performance as for loop, but this is a pythonic approach and you can get next elements basically for free)
