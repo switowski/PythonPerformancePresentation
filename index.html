@@ -48,8 +48,7 @@
 						Sebastian Witowski
 
 						Note:
-						Hi guys, before we start - a quick question. How many of you know Python ?
-						How many of you are using Python at work ? And how many of you have been using Python for more than 1 year ?
+						Hi guys, before we start - a quick question. How many of you are programming in Python ?
 					</script>
 				</section>
 				<section data-markdown>
@@ -57,15 +56,14 @@
 						<img data-src="./img/zen.png">
 
 						Note:
-						Cool, so I guess quite a lot of you are familiar with "Python zen" saying that there should be only one way to do something.
+						Cool, so I guess quite a lot of you are familiar with "The Zen of Python" saying that there should be only one way to do something.
 						However, if you come from a different language this "one" way might not be so "obvious".
 						Sometimes there can be a huge performance gap between two programming structures that are producing the same results.
-						More often, the performance difference won't be that huge, but if you have many small improvements they will add up.
+						More often, the performance difference won't be that huge, but if you have many small improvements they will add up.'
 					</script>
 				</section>
 				<section>
 					<h2>How to benchmark ?</h2>
-					<div class='fragment'>
 					<p>
 						Start REPL:
 						<pre><code class='python'>$ ipython # Using Python 2.7.6 version</code></pre>
@@ -86,13 +84,10 @@
 						Et voilà:
 						<pre><code class='python'>100000000 loops, best of 3: 7.15 ns per loop</code></pre>
 					</p>
-					</div>
 
 					<aside class="notes">
 						So I'm gonna show you different ways to code some common programming structures along with the benchmarks.
 						Benchmark numbers are not important. What is important is how easily you can get some speed improvements.
-						$$ So I'm gonna use IPython and it's magic function called %timeit, which is just wrapper around Python's timeit library.
-						If you are not using IPython - I strongly recommend it, it's way more powerfull than the standard Python REPL with autocompletion, some magic functions, syntax highlighting and other candies.'
 					</aside>
 				</section>
 				<section>
@@ -111,7 +106,7 @@ return how_many</pre></code>
 						<div class='clear'></div>
 						<p class="fragment">Difference ?</p>
 						<div class='fragment'>
-							<pre><code class='python'>>>> ARR=range(1,1000000) # 1 million, because big data
+							<pre><code class='python'>>>> ARR=range(1,1000000) # 1 million, because "big data"
 >>> %timeit slow_list_count(ARR)
 10 loops, best of 3: 26.5 ms per loop
 >>> %timeit fast_list_count(ARR)
@@ -122,8 +117,8 @@ return how_many</pre></code>
 						Let's start with something simple.
 						Let's say you want to count the number of elements in a list. $$ You can easily write you own function, that contains just a for loop that increments a variable.
 						There is nothing wrong with this code, except that it's slow. $$ You can achieve the same result using the built-in len() function. $$ Any difference ?
-						$$ Yes, the second function is two hundred seventy thounsands times faster.
-						So, try to use the built-in function when you can. Python is not Ruby, there is just a handful of built-in functions, so it's not so hard to remember them.
+						$$ Yes, the second function is way faster.
+						So, try to use the built-in functions when you can. There is just a handful of them, so it's not so hard to remember the most useful ones.
 						</aside>
 				</section>
 				<section data-markdown>
@@ -155,11 +150,10 @@ return how_many</pre></code>
 						Let's say you want to filter a list of numbers and select only the odd ones.
 						You can again write a simple function with a loop.
 						But I told you before that you can write faster code if you use the built-in functions so you go to the Python manual and find a filter() function there.
-						You also find information about lambdas.
+						You also find information about lambdas because lambdas are hip.
 						$$ So you rewrite your function using filter with a simple lambda inside.
 						$$ Aaand it's slower.
-						Why is it slower ? Well the filter function works very fast if you specify a built-in function but not so fast if you use your own functions.
-						So is it possible that the fastest way to filter a list in Python is with a loop ?
+						So, is there any way to make it faster than with an ugly loop ?
 					</script>
 				</section>
 				<section data-markdown>
@@ -168,7 +162,7 @@ return how_many</pre></code>
 						```python
 						def filter_list_comprehension(arr):
 							return [element for element in arr if element % 2]
-						
+
 						>>> ARR=range(1,1000000)
 						>>> %timeit filter_list_comprehension(ARR)
 						10 loops, best of 3: 54.2 ms per loop
@@ -177,7 +171,7 @@ return how_many</pre></code>
 						```
 
 						Note:
-						Hell no! You can use list comprehension for that. It's faster and (at least for me) looks better.
+						Yes, you can use list comprehension for that. It's faster and (at least for me) it looks better.
 					</script>
 				</section>
 				<section data-markdown>
@@ -214,7 +208,7 @@ return how_many</pre></code>
 						>>> %timeit find_x_loop(ARR, 50000)
 						1000 loops, best of 3: 892 µs per loop
 						# 40 times faster
-						
+
 						# What if we want the element in the middle ?
 						>>> %timeit find_x(ARR, 500000)
 						10 loops, best of 3: 29 ms per loop
@@ -225,7 +219,7 @@ return how_many</pre></code>
 						```
 						</div>
 						Note:
-						We can use the loop instead - it might not sound pythonic and fun at all, but $$ it's faster and we doesn't spend time on useless computations.
+						We can use the loop instead - it might not sound pythonic and fun at all, but $$ it's faster and we don't spend time on useless computations.
 						So, as you can see, not always the fancy pythonic solution is the best solution.
 					</script>
 				</section>
@@ -253,7 +247,7 @@ return how_many</pre></code>
 						</div>
 						Note:
 						Nah, I'm just kidding. Of course there is a more pythonic solution than that - a generator.
-						$$ It has the same speed performance as loop, but if you want to get the next element you got it basically for free in terms of computation time.
+						$$ It has the same speed performance as loop, but if you want to get more than one element you get them instantly.'
 					</script>
 				</section>
 				<section data-markdown>
@@ -291,14 +285,14 @@ def element_in_array_index(array, element):
 						```
 						</div>
 						Note:
-						Let say you have a list and you want to find if an element is in that list.
-						Most of you know that using this loop is not a best solution
+						Let say you want to check if an element belongs to a list.
+						Most of you know that using this loop is not the best solution
 						$$
 						You can instead use the index function together with some exception handling.
 						It is faster and more pythonic because it is using one of the fundamental python rules: "ask for forgiveness, not for permission".
 						$$
 						But you can simplify your code to just one line using the "in" operator.
-						It is even faster (especially in case that the element we are looking for does not exist in the list) and it is more simple to understand.
+						It is even faster and simpler.
 					</script>
 				</section>
 				<section data-markdown>
@@ -332,9 +326,9 @@ def set_check(s):
 						```
 						</div>
 						Note:
-						If you are checking if an element belongs to a list often, you might be interested in converting your list to a set.
+						If you are checking for a list membership often, then you might be interested in converting your list to a set.
 						$$ The lookup time inside a set is constant ...
-						$$ ... but it comes with a price of an overhead to convert a list to a set.
+						$$ ... but converting a list to a set comes with a price of a small overhead
 					</script>
 				</section>
 				<section data-markdown>
@@ -361,8 +355,7 @@ ARR = range(1,10001) * 10 # 100 000 elements with duplicates
 						</div>
 						Note:
 						Speaking of sets, they have some other cool features.
-						$$ They are blazingly fast when it comes to removing duplicates from a collection of items.
-						Not to mention how simple your code looks now.
+						$$ By default, they remove duplicates from a collection of items.
 					</script>
 				</section>
 				<section data-markdown>
@@ -370,15 +363,18 @@ ARR = range(1,10001) * 10 # 100 000 elements with duplicates
 						#### Check if one list contain another
 						```python
 def check_if_subset(big_array, small_array):
-	for el in small_array:
-		if el not in big_array:
+	for element in small_array:
+		if element not in big_array:
 			return False
 	return True
+						```
+						```python
 >>> ARR = range(1,1000000)
 >>> SMALL_ARR = range(1,10000)
 >>> %timeit check_if_subset(ARR, SMALL_ARR)
 1 loops, best of 3: 316 ms per loop
-
+						```
+						```python
 >>> S = set(range(1,1000000))
 >>> SMALL_S = set(range(1,10000))
 >>> %timeit S.issubset(SMALL_S)
@@ -386,43 +382,33 @@ def check_if_subset(big_array, small_array):
 # 5 000 0000 times faster
 						```
 						Note:
-						 They have a lot of cool functions that you can use to check for union, intersection or difference, so please don't use loops for that.
-						 For example, if you want to check if one collection of items contains a specific subset you have a issubset function for that, which is faster and more concise.'
-					</script>
-				</section>
-
-
-				<section data-markdown>
-					<script type="text/template">
-						<img data-src="./img/running-time.jpg">
-						
-						Note:
-						I'm gonna stop now cause I'm running out of time, if you find this topic interesting and you want more examples please send an email to Sebastian or Alberto.
-						They said that if they get 1 thousand emails I will get a full IT technical forum talk :)
+						 They also have a lot of functions that you can use to check for union, intersection or difference, so please don't use loops for that.
+						 For example, to check if one set is a subset of another one, you can use the issubset function, which is faster and more concise.'
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						#### Takeaway
+						#### Take-away
 						* Think when you are coding (be curious)
 						* %timeit is your friend
 						```python
-						#python
+						# python
 						%timeit your_function
 						```
 						vs.
 						```java
-						// java
+						// java (no mocking intended)
 						long startTime = System.nanoTime();
 						your_function();
 						long elapsedTime = System.nanoTime() - startTime;
-						System.out.println("Total execution time: " + elapsedTime/1000000);
+						System.out.println("Total time: " + elapsedTime/1000000);
 						```
 						* IPython is your friend (tab-completion, ?, ??, magic functions, colors and more)
+						* You liked it ? Let me know, that's just the tip of the iceberg
 						Note:
-						Just a key takeaway from my talk:
-						$$ Always be curious when you are programming, especially if you have moved to a new language. The same structure that was super-fast in one language might not work so well anymore.
-						$$ When in doubts - use timeit. It's just one line of code if you are using IPython
+						I'm running out of time, so just a key take away from my talk:
+						Always be curious when you are programming, especially if you have moved to a new language. The same structure that was super-fast in one language might not work so well anymore.
+						When in doubts - use timeit. It's just one line of code if you are using IPython'
 						And if you are programming in Python, use the IPython over the standard Python REPL
 					</script>
 				</section>
