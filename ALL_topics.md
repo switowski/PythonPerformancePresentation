@@ -1,6 +1,6 @@
 ### Possible Python Performance improvements and best practices:
 * General ideas:
-    - Don't reinvent the wheel by writing your own versions of built-in functions.  
+    - Don't reinvent the wheel by writing your own versions of built-in functions.
         + Example of using len() function vs writing your own function that counts the number of elements by incrementing a variable.
         + Example of using sum() vs for loop for adding elements
     Python 2.7.10 contains 76 built-in variables [source](https://docs.python.org/2/library/functions.html) - you won't need all of them (I don't remember when was the list time - if ever - I used _basestring()_, _execfile()_ or _reload()_), but it will take you just a moment to take a look at that list from time to time and keep it in the back of your head. If you want some more cool functions, there is the [itertools](https://docs.python.org/release/2.7.2/library/itertools.html) module that contains _fast, memory efficient tools that are useful by themselves or in combination_
@@ -10,24 +10,26 @@
     - Loops:
         + You almost never need to use the **for** loop. Map/filter/reduce (functions are better solution. List comprehensions are the best solution.
         + If the body of a loop is simple, the interpreter overhead for the **for** loop itself can be quite big - in this case you can use **map()**. Map is _a for loop moved into C code_.[^1]
-        + It's faster to perform an operation 1000 times inside a function, than calling the function 1000 times, for example:  
-        x = 0  
-        def do(num):  
-        &nbsp;global x  
-        &nbsp;x =+ 1  
-        for num in range(1000):  
-        &nbsp;do(num)  
-        is slower than:  
-        x = 0  
-        def do():  
-        &nbsp;global x  
-        &nbsp;for num in range(1000):  
-        &nbsp;&nbsp;x =+ 1  
+        + It's faster to perform an operation 1000 times inside a function, than calling the function 1000 times, for example:
+        x = 0
+        def do(num):
+        &nbsp;global x
+        &nbsp;x =+ 1
+        for num in range(1000):
+        &nbsp;do(num)
+        is slower than:
+        x = 0
+        def do():
+        &nbsp;global x
+        &nbsp;for num in range(1000):
+        &nbsp;&nbsp;x =+ 1
         do().[^1]
         + Don't make loops like that: **for i in range(0,len(list)):**. If you need a list with index use the enumerate() function
 * Operators:
     - If checking for True/False the fastest way is __if element__ (vs __if element is True__ or __if element == True__)
 * Structures:
+    - General:
+        + Using [] is faster than calling list(), using {} is faster than calling dict() because the first ones are _literal syntax_ so Python just creates bytecode for them, while the second one are _objects_ that need to be resolved [^3]
     - Lists:
         + Sorting lists is faster if you sort in place (**list.sort() vs sorted(list)**)
         + When using **sorted()** function you can specify **cmp()** function that is used to compare two elements or **key()** (Python 2.4 and up)function that will return a comparison key for each list element. Use the **key()** because it's faster (the **cmp()** is actually removed in Python 3) - cmp has to be evaluated for each comparison, while key only once per element
@@ -51,8 +53,8 @@
     - Using string formatting is faster than string concatenation: **out = "<html>%s%s%s%s</html>" % (head, prologue, query, tail)** is better than **out = "<html>" + head + prologue + query + tail + "</html>"** (and using **out = "<html>%(head)s%(prologue)s%(query)s%(tail)s</html>" % locals()** is more clear).[^1]
 * Lambdas:
     - There is usually no difference between using a lambda and a named function, so often named function is a better solution because it's more readable. Lambdas are nice as a short, simple one-liners that don't require a lot of explanation.
-    - Also, according to PEP-8 you should not assign lambda to a variable:  
-    Good: **def f(x): return 2*x**  
+    - Also, according to PEP-8 you should not assign lambda to a variable:
+    Good: **def f(x): return 2*x**
     Bad: **f = lambda x: 2*x** - this is a duplication of def functionality and can cause confusion ([source](http://stackoverflow.com/questions/25010167/e731-do-not-assign-a-lambda-expression-use-a-def))
 * Generators:
     - In short, generator expressions are like list comprehension but they don't generate the whole list at once (so they are faster if you don't need the whole list).
@@ -79,3 +81,4 @@
 
 [^1]: https://wiki.python.org/moin/PythonSpeed/PerformanceTips
 [^2]: http://stackoverflow.com/questions/135041/should-you-always-favor-xrange-over-range
+[^3]: http://stackoverflow.com/questions/30216000/why-is-faster-than-list
