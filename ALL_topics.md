@@ -6,6 +6,11 @@
     Python 2.7.10 contains 76 built-in variables [source](https://docs.python.org/2/library/functions.html) - you won't need all of them (I don't remember when was the list time - if ever - I used _basestring()_, _execfile()_ or _reload()_), but it will take you just a moment to take a look at that list from time to time and keep it in the back of your head. If you want some more cool functions, there is the [itertools](https://docs.python.org/release/2.7.2/library/itertools.html) module that contains _fast, memory efficient tools that are useful by themselves or in combination_
     - _It's better to beg for forgiveness than to ask for permission_ give some examples where a code with exceptions handling is faster than code with __if__ statements
     - Mutable defaults: don't do stuff like __def foo(element, x=[])__, you will spend a lot of time debugging this error. Use **def foo(element, x=None):;if x in None:; x = []**
+    - Parallel vs sequential variables assignment: parallel variables assignment is faster than sequential one (however, sequential assignment might be more clear for some):
+    >>> %timeit q=1;w=2;e=3;r=4;t=5;y=6;u=7;i=8;o=9;p=0;
+    10000000 loops, best of 3: 69.6 ns per loop
+    >>> %timeit q,w,e,r,t,y,u,i,o,p = 1,2,3,4,5,6,7,8,9,0
+    10000000 loops, best of 3: 49.4 ns per loop
 * Control flow:
     - Loops:
         + You almost never need to use the **for** loop. Map/filter/reduce (functions are better solution. List comprehensions are the best solution.
