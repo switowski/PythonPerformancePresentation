@@ -3,7 +3,7 @@ General info:
     Maybe it's not Python that sucks, maybe it's my code.
 
 * a very short abstract/description/teaser (one paragraph, max 2-3 short phrases) with your main take-away message:
-    Did you know that that integers from -5 to 257 are preallocated in Python for faster access, so if reuse them 1000 times instead of allocating memory for a bigger integer, you will save a whopping 1 millisecond of code's execution time ? Isn't that thrilling ? Well, this talk is not so detailed. Instead, I will give you examples when sets are better than lists, what is better than "for loops" and how much faster can your code be if you use built-in functions.
+    Did you know that in Python integers from -5 to 257 are preallocated, so if reuse them 1000 times, instead of allocating memory for a bigger integer, you will save a whopping 1 millisecond of code's execution time ? Isn't that thrilling ? Well, before you get that crazy, learn some basic performance tricks that you can start using today.
 
 * (recommended) 1-2 hashtags that people could use when discussing your topic on social.cern.ch or Twitter:
     #Python, #BestPractices
