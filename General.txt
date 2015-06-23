@@ -14,3 +14,10 @@ General info:
 
 * whether you agree to be video-recorded and webcast (preferably: yes):
     yes
+
+Feedback of Sebastiana:
+- Powiększyć font
+- Większe odstępy między liniami kodu
+- Bardziej czytelne wyniki (dać takie same jednostki, dać procenty na czerwono)
+- Rozdzielić problemy od siebie (dodać numerację, tak żeby było dokładnie wiadomo kiedy jeden problem się kończy, a kiedy drugi się zaczyna)
+- Slajd 3: brakuje ">>>" przy %timeit
