@@ -78,7 +78,7 @@
 					</p>
 					<p>
 						timeit:
-						<pre><code class='python'>%timeit test</code></pre>
+						<pre><code class='python'>>>> %timeit test</code></pre>
 					</p>
 					<p>
 						Et voilà:
@@ -91,28 +91,22 @@
 					</aside>
 				</section>
 				<section>
-						<h4>Counting the number of elements in list</h4>
-						<div class='fragment left-half'>
+						<h4>#1 Counting the number of elements in list</h4>
+						<div class='fragment'>
 							<pre><code class='python'>def slow_list_count(array):
 how_many = 0
 for element in array:
     how_many += 1
 return how_many</pre></code>
 						</div>
-						<div class='fragment right-half'>
+						<div class='fragment'>
 							<pre><code class='python'>def faster_list_count(array):
     return len(array)</pre></code>
 						</div>
 						<div class='clear'></div>
 						<p class="fragment">Difference ?</p>
-						<div class='fragment'>
-							<pre><code class='python'>>>> ARR=range(1,1000000) # 1 million, because "big data"
->>> %timeit slow_list_count(ARR)
-10 loops, best of 3: 26.5 ms per loop
->>> %timeit fast_list_count(ARR)
-10000000 loops, best of 3: 96.7 ns per loop # ~274 000 times faster</pre></code>
-							<img data-src="./img/over9000.jpg">
-						</div>
+						<p class='fragment'>For 1 000 000 elements it's <span style="color: red">26.5 ms</span> vs <span style="color: green">96.7 ns</span></p>
+						<p class="fragment"><img style="float: left; margin-left: 100px;" data-src="./img/over9000.jpg"> <span style="float: left; padding-top: 100px; padding-left: 20px;">(<span style="color: green">274 000</span> faster actually)</span></p>
 						<aside class="notes">
 						Let's start with something simple.
 						Let's say you want to count the number of elements in a list. $$ You can easily write you own function, that contains just a for loop that increments a variable.
