@@ -155,6 +155,13 @@ body {
   background: #3F3F3F;
   color: red; }
 
+.reveal .good {
+  color: lime;
+}
+
+.reveal .bad {
+  color: red;
+}
 
 .reveal table {
   margin: auto;
