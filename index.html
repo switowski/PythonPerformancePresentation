@@ -78,11 +78,11 @@
 					</p>
 					<p>
 						timeit:
-						<pre><code class='python'>>>> %timeit test(range(1, 1000000))</code></pre>
+						<pre><code class='python'>>>> %timeit test(range(1, 1 000 000))</code></pre>
 					</p>
 					<p>
 						Et voilà:
-						<pre><code class='python'>100000000 loops, best of 3: 93.1 ms per loop</code></pre>
+						<pre><code class='python'>100 000 000 loops, best of 3: 93.1 ms per loop</code></pre>
 					</p>
 
 					<aside class="notes">
@@ -94,10 +94,10 @@
 						<h4>#1 Counting the number of elements in list</h4>
 						<div class='fragment'>
 							<pre><code class='python'>def slow_list_count(array):
-how_many = 0
-for element in array:
-    how_many += 1
-return how_many</pre></code>
+    how_many = 0
+    for element in array:
+        how_many += 1
+    return how_many</pre></code>
 						</div>
 						<div class='fragment'>
 							<pre><code class='python'>def faster_list_count(array):
@@ -105,7 +105,7 @@ return how_many</pre></code>
 						</div>
 						<p class="fragment">Difference ?</p>
 						<p class='fragment'>For 1 000 000 elements it's <span style="color: red">26.5 ms</span> vs <span style="color: lime">96.7 ns</span></p>
-						<p class="fragment"><img style="float: left; margin-left: 100px;" data-src="./img/over9000.jpg"> <span style="float: left; padding-top: 100px; padding-left: 20px;">(<span style="color: lime">274 000</span> faster actually)</span></p>
+						<p class="fragment"><img style="float: left; margin-left: 100px;" data-src="./img/over9000.jpg"> <span style="float: left; padding-top: 100px; padding-left: 20px;">(<span style="color: lime">274 000</span>times faster)</span></p>
 						<aside class="notes">
 						Let's start with something simple.
 						Let's say you want to count the number of elements in a list. $$ You can easily write you own function, that contains just a for loop that increments a variable.
@@ -163,13 +163,15 @@ return how_many</pre></code>
 						#### #3 Finding the first element matching the criteria
 						List comprehension approach - slow and inefficient
 						```python
-						def find_x(array, min_val):
+						def find_min(array, min_val):
 							return [i for i in array if i > min_val][0]
 
 						```
-						<br />
-						<span class="bad">36.5 ms</span>
-						to find a number bigger than 50 000 <br />in an array with 1 000 000 elements
+						```python
+						>>> find_min(range(1,1 000 000),50 000)
+						```
+						<p><span class="bigred">36.5 ms</span></p>
+
 						Note:
 						Let say you have a list and you want to find the first element that is matching a specific criteria.
 						Using a list comprehension might sound like a pythonic solution but it is not very efficient,
@@ -186,9 +188,16 @@ return how_many</pre></code>
 								if element > min_val:
 									return element
 						```
-						<p class='fragment'><span class="good">892 µs</span>(40 times faster)</p>
-						<p class="fragment">If we want the element bigger than 500 000:<br/>
-						<span class="good">10.5 ms</span>(3 times faster)</p>
+						```python
+						>>> find_min(range(1,1 000 000), 50 000)
+						```
+						<p><span class="good">892 µs</span>(40 times faster)</p>
+
+						```python
+						>>> find_min(range(1,1 000 000), 500 000)
+						```
+
+						<p><span class="good">10.5 ms</span>(3 times faster)</p>
 
 						Note:
 						We can use the loop instead - it might not sound pythonic and fun at all, but $$ it's faster and we don't spend time on useless computations.
