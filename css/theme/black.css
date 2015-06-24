@@ -163,6 +163,16 @@ body {
   color: red;
 }
 
+.reveal .with-background {
+  display: block;
+  width: 90%;
+  margin: 20px auto;
+  overflow: auto;
+  max-height: 400px;
+  word-wrap: normal;
+  background: #3F3F3F;
+}
+
 .reveal table {
   margin: auto;
   border-collapse: collapse;
