@@ -104,8 +104,8 @@
     return len(array)</pre></code>
 						</div>
 						<p class="fragment">Difference ?</p>
-						<p class='fragment'>For 1 000 000 elements it's <span style="color: red">26.5 ms</span> vs <span style="color: lime">96.7 ns</span></p>
-						<p class="fragment"><img style="float: left; margin-left: 100px;" data-src="./img/over9000.jpg"> <span style="float: left; padding-top: 100px; padding-left: 20px;">(<span style="color: lime">274 000</span>times faster)</span></p>
+						<p class='fragment'>For 1 000 000 elements it's <span class="bad">26.5 ms</span> vs <span class="good">96.7 ns</span></p>
+						<p class="fragment"><img style="float: left; margin-left: 100px;" data-src="./img/over9000.jpg"> <span style="float: left; padding-top: 100px; padding-left: 20px;">(<span class="good">274 000</span>times faster)</span></p>
 						<aside class="notes">
 						Let's start with something simple.
 						Let's say you want to count the number of elements in a list. $$ You can easily write you own function, that contains just a for loop that increments a variable.
@@ -126,12 +126,12 @@
 							return output
 
 						```
-						<p class='fragment'><span class="bigred">70 ms</span></p>
+						<p class='fragment'><span class="bad">70 ms</span></p>
 						<div class='fragment'>
 						<pre><code class='python'>def filter_list_faster(array):
 							return filter(lambda x: x % 2, array)</pre></code>
 						</div>
-						<p class='fragment'><span class="bigred">88.3 ms</span></p>
+						<p class='fragment'><span class="good">88.3 ms</span></p>
 
 						Note:
 						Let's say you want to filter a list of numbers and select only the odd ones.
@@ -170,7 +170,7 @@
 						```python
 						>>> find_min(range(1,1 000 000),50 000)
 						```
-						<p><span class="bigred">36.5 ms</span></p>
+						<p><span class="bad">36.5 ms</span></p>
 
 						Note:
 						Let say you have a list and you want to find the first element that is matching a specific criteria.
@@ -211,18 +211,17 @@
 						```python
 						>>> next(item for item in array if item>50000)
 						```
-						<p class="fragment"><span class="good">888 µs</span> - the same performance as loop<br />
-						But !</p>
+						<p><span class="good">888 µs</span> - the same performance as loop</p>
 						<div class='fragment'>
+						<p>But !
 						```python
 						>>> gen = (item for item in array if item>50000)
 						>>> next(gen)
 						50001
 						>>> next(gen)
 						50002
-						>>> next(gen)
-						50003
 						```
+						</p>
 						</div>
 						Note:
 						Nah, I'm just kidding. Of course there is a more pythonic solution than that - a generator.
