@@ -140,7 +140,7 @@ body {
 
 .reveal pre code {
   font-size: larger;
-  line-height: 30px;
+  line-height: 33px;
   display: block;
   padding: 5px;
   overflow: auto;
@@ -164,9 +164,13 @@ body {
   color: red;
 }
 
+.reveal .orange {
+  color: #FD992A;
+  font-size: 120%;
+}
+
 .reveal .fire {
   margin: 0 0 20px 0;
-  color: #fff;
   font-family: 'Firestarter', sans-serif;
   line-height: 1.2;
   font-weight: 400;
