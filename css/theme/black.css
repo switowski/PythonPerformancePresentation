@@ -1,4 +1,5 @@
 @import url(../../lib/font/source-sans-pro/source-sans-pro.css);
+@import url(../../lib/font/firestarter/firestarter.css);
 /**
  * Black theme for reveal.js. This is the opposite of the 'white' theme.
  *
@@ -161,6 +162,16 @@ body {
 
 .reveal .bad {
   color: red;
+}
+
+.reveal .fire {
+  margin: 0 0 20px 0;
+  color: #fff;
+  font-family: 'Firestarter', sans-serif;
+  line-height: 1.2;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #FD992A;
 }
 
 .reveal .with-background {

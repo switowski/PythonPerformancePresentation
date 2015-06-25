@@ -39,9 +39,10 @@
 			<div class="slides">
 				<section data-markdown>
 					<script type="text/template">
-						# Maybe it's not Python that sucks
-						## Maybe it's my code
+						# Maybe it's not Python that sucks,
+						# maybe it's my code
 						<br>
+						#### How to write <span class="fire">faster</span> code
 						<br>
 						<br>
 						<br>
@@ -63,26 +64,9 @@
 					</script>
 				</section>
 				<section>
-					<h2>How to benchmark ?</h2>
+					<img data-src="./img/benchmark.jpg">
 					<p>
-						Start REPL:
-						<pre><code class='python'>$ ipython</code></pre>
-					</p>
-					<p>
-						Write a function:
-<pre><code class='python'>def powers(elements):
-    arr = []
-    for i in elements:
-    	arr.append(i*i)
-</code></pre>
-					</p>
-					<p>
-						%timeit:
-						<pre><code class='python'>%timeit test(range(1, 1 000 000))</code></pre>
-					</p>
-					<p>
-						Et voilà:
-						<pre><code class='python'>100 000 000 loops, best of 3: 93.1 ms per loop</code></pre>
+						With: <code class="good">IPython</code> and it's magic function<code class="good">%timeit</code>
 					</p>
 
 					<aside class="notes">
