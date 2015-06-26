@@ -47,9 +47,6 @@
 						<br>
 						<br>
 						Sebastian Witowski
-
-						Note:
-						Hi guys, before we start - a quick question. How many of you are programming in Python ?
 					</script>
 				</section>
 				<section data-markdown>
@@ -57,9 +54,9 @@
 						<img data-src="./img/zen.png">
 
 						Note:
-						Cool, so I guess quite a lot of you are familiar with "The Zen of Python" saying that there should be only one way to do something.
-						However, if you come from a different language this "one" way might not be so "obvious".
-						Sometimes there can be a huge performance gap between two programming structures that are producing the same results.
+						I guess quite a lot of you know "The Zen of Python" saying that there should be only one way to do something.<br/>
+						However, if you come from a different language this "one" way might not be so "obvious".<br/>
+						Sometimes there can be a huge performance gap between two programming structures that are producing the same results.<br/>
 						More often, the performance difference won't be that huge, but if you have many small improvements they will add up.'
 					</script>
 				</section>
@@ -71,7 +68,7 @@
 					</p>
 
 					<aside class="notes">
-						So let me show you some examples with benchmarks.
+						So let me show you some examples with benchmarks.<br/>
 						The numbers are not important. What is important is how easily you can get some speed improvements.
 					</aside>
 				</section>
@@ -83,17 +80,21 @@ for element in BIG_LIST:
     how_many += 1
 print how_many</pre></code>
 							<pre><code class='python'># FAST
-print len(array)</pre></code>
+print len(BIG_LIST)</pre></code>
 					<p>For 1 000 000 elements it's <span class="bad">26.5 ms</span> vs <span class="good">96.7 ns</span>
-					<img data-src="./img/over9000.jpg"><br />
-					<span class="good">274 000</span> times faster actually</p>
+						<img data-src="./img/over9000.jpg"><br />
+						<span class="good">274 000</span> times faster actually
+					</p>
 
 					<aside class="notes">
-					Let's start with something simple.
-					Let's say you want to count the number of elements in a list. You can easily write you own function with just a for loop that increments a variable.
-					There is nothing wrong with this code, except that it's slow. You can achieve the same result using the built-in len() function. Any difference ?
-					Yes, the second function is way faster.
-					So, try to use the built-in functions when you can. There is just a few of them, so it's very easy to remember the most useful ones.
+					Let's start with something simple.<br/>
+					Let's say you want to count the number of elements in a list.<br/>
+					You can easily write you own function with just a for loop that increments a variable.<br/>
+					There is nothing wrong with this code, except that it's slow.<br/>
+					You can achieve the same result using the built-in len() function.<br/>
+					As you can see, the difference is quite huge.<br/>
+					So, try to use the built-in functions when you can.<br/>
+					There is just a few of them, so it's very easy to remember the most useful ones.
 					</aside>
 				</section>
 				<section>
@@ -116,11 +117,11 @@ print len(array)</pre></code>
 							<p class='fragment'><span class="bad">88.3 ms</span></p>
 
 							Note:
-							Let's say you want to filter a list of numbers and select only the odd ones.
-							You can again use a loop.
-							But I told you before that you can write faster code if you use the built-in functions so you go to the Python manual and find a filter() function there.
-							You rewrite your function using filter with a simple lambda inside.
-							$$ Aaand it's slower.
+							Let's say you want to filter a list of numbers and select only the odd ones.<br/>
+							You can again use a loop.<br/>
+							But I told you before that you can write faster code if you use the built-in functions so you go to the Python manual and find a filter() function there.<br/>
+							You rewrite your function using filter with a simple lambda inside.<br/>
+							$$ Aaand it's slower.<br/>
 							Sooo, is there any way to make it faster ?
 						</script>
 					</section>
@@ -136,7 +137,9 @@ print len(array)</pre></code>
 							<span class="good">60%</span> faster than the filter() version</p>
 
 							Note:
-							Yes there is ! You can use list comprehension for that. It's faster and (at least for me) it looks better.'
+							Yes there is !<br/>
+							You can use list comprehension for that.<br/>
+							Not only it's faster but (at least for me) it looks better.'
 						</script>
 					</section>
 				</section>
@@ -152,7 +155,7 @@ print len(array)</pre></code>
 							<p><span class="bad">36.5 ms</span></p>
 
 							Note:
-							Let say you have a list and you want to find the first element bigger than some number.
+							Let say you have a list and you want to find the first element bigger than some number.<br/>
 							Using a list comprehension might sound like a pythonic solution but it is not very efficient,
 							because it will iterate over the whole list and we don't need that.'
 						</script>
@@ -170,8 +173,8 @@ print len(array)</pre></code>
 							<p><span class="good">892 µs</span>(40 times faster)</p>
 
 							Note:
-							We can use the loop instead - it might not sound pythonic and fun at all, but it's faster and we don't spend time on useless computations.
-							So, as you can see, not always the fancy pythonic solution is the best solution.
+							We can use the loop instead - it might not sound pythonic and fun at all, but hey, it's faster and we don't spend time on useless computations.<br/>
+							However, in Python quite often there is something better than a loop.
 						</script>
 					</section>
 					<section data-markdown>
@@ -180,18 +183,17 @@ print len(array)</pre></code>
 							Generator - fast and reusable
 							```python
 							gen = (item for item in LIST if item > NUMBER)
-							print next(gen)
+							print next(gen) # => 50000
 							```
 							<p><span class="good">888 µs</span> - the same as previously</p>
 							<p>And now you get next elements even faster !
 							```python
-							print next(gen)
-							print next(gen)
+							print next(gen) # => 50001
+							print next(gen) # => 50002
 							```
-							TODO: benchmark this
 							</p>
 							Note:
-							Nah, I'm just kidding. Of course there is a more pythonic solution than that - a generator.
+							And in this case it's called a generator.<br/>
 							It has the same speed performance as loop, but if you want to get more than one element you get them instantly.'
 						</script>
 					</section>
@@ -219,9 +221,9 @@ except ValueError:
 							<p><span class="good">1.33 ms</span> (almost 2 times faster)</p>
 							</div>
 							Note:
-							Let say you want to check if an element belongs to a list.
-							Most of you know that using this loop is not the best solution
-							You can instead use the index function together with some exception handling.
+							Let say you want to check if an element belongs to a list.<br/>
+							Most of you know that using this loop is not the best solution.<br/>
+							You can instead use the index function together with some exception handling.<br/>
 							It is faster and more pythonic because it is using one of the fundamental python rules: "ask for forgiveness, not for permission".
 						</script>
 					</section>
@@ -234,7 +236,7 @@ NUMBER in BIG_LIST
 							<p><span class="good">1.08 ms</span> (another 20% faster)</p>
 							</div>
 							Note:
-							But you can simplify your code to just one line using the "in" operator.
+							But you can simplify your code to just one line using the "in" operator.<br/>
 							It is even faster and simpler.
 						</script>
 					</section>
@@ -255,9 +257,9 @@ NUM_1 in SET and NUM_2 in SET and NUM_3 in SET
 							<img data-src="./img/over9000_cat.jpg">
 							</p>
 							Note:
-							But what if you are checking for more than one element ?
-							In this case, you might be interested in using a set.
-							The lookup time inside a set is constant, so it quickly pays back for the overhead you need to convert list to a set.
+							But what if you are checking for more than one element ?<br/>
+							In this case, you might be interested in using a set.<br/>
+							The lookup time inside a set is constant, so very often it's worth the overhead to convert the list to a set'
 						</script>
 					</section>
 				</section>
@@ -273,91 +275,106 @@ NUM_1 in SET and NUM_2 in SET and NUM_3 in SET
 						```
 						<p><span class="bad">3.27 s</span></p>
 						```python
-set(LIST)
+set(BIG_LIST)
 						```
 						<p><span class="good">1.12 ms</span> (almost 3 000 times faster)</p>
 						Note:
-						Speaking of sets, they have some other cool features.
-						$$ By default, they remove duplicates from a collection of items.
+						Speaking of sets, they have some other cool features.<br/>
+						For example, they can't contain duplicates so the fastest way to remove duplicates from a list is to convert it to a set.'
 					</script>
 				</section>
-				<section data-markdown data-background="./img/over5000000.jpg">
-					<script type="text/template">
-						#### <span class="orange">#6</span> Check if one list contain another
-						```python
-def check_if_subset(big_array, small_array):
-	for element in small_array:
-		if element not in big_array:
-			return False
-	return True
-						```
-						```python
-LIST = range(1,1 000 000)
-SMALL_LIST = range(1,10 000)
+				<section>
+					<section data-markdown>
+						<script type="text/template">
+							#### <span class="orange">#6</span> Check if one list contains another
+							```python
+for element in SMALL_LIST:
+	if element not in BIG_LIST:
+		print False
+		break
+print True
+							```
+							<p><span class="bad">316 ms</span></p>
+							```python
+BIG_SET = set(BIG_LIST)
+SMALL_SET = set(SMALL_LIST)
 
-check_if_subset(ARR, SMALL_ARR)
-						```
-						<p class="with-background"><span class="bad">316 ms</span></p>
-						```python
-A_SET = set(range(1,1 000 000))
-SMALL_SET = set(range(1,10 000))
-
-SMALL_SET.issubset(A_SET)
-						```
-						<p class="with-background"><span class="good">60.3 ns</span> (5 000 000 times faster)<br />
-						Note:
-						 They also have a lot of functions that you can use to check for union, intersection or difference, so please don't use loops for that.
-						 For example, to check if one set is a subset of another one, you can use the issubset function, which is faster and more concise.'
-					</script>
+SMALL_SET.issubset(BIG_SET)
+							```
+							<p><span class="good">???</span></p>
+							Note:
+							They also have a lot of functions that you can use to check for union, intersection or difference, so please don't use loops for that.<br/>
+							For example, to check if one set is a subset of another one, you can use the issubset function, which is faster.'
+						</script>
+					</section>
+					<section data-markdown data-background="./img/vegetashock.gif">
+						<script type="text/template">
+							<p>&nbsp;</p>
+							<p>&nbsp;</p>
+							<p>&nbsp;</p>
+							<p>&nbsp;</p>
+							<p>&nbsp;</p>
+							<p class="with-background"><span class="good">60.3 ns</span> (5 000 000 times faster)</p>
+							<p style="position: absolute; right: -20%; top: 140%; font-size: 16px;">[source: http://lieracc.deviantart.com/art/IT-S-OVER-9000-Animated-GIF-385933399]</p>
+							Note:
+							And I mean, way faster.<br/>
+							With only 10 thousands elements in the small list, issubset is 5 milion times faster.
+						</script>
+					</section>
 				</section>
-				<section data-markdown>
-					<script type="text/template">
-						#### Take-away
+				<section>
+					<section data-markdown>
+						<script type="text/template">
+							#### To sum up
 
-						Note:
-						So, to sum up:
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						Think when you are coding (be curious)
+							Note:
+							So, to sum up:
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							Think when you are coding (be curious)
 
-						Note:
-						Always be curious when you are programming, especially if you have moved to a new language. The same structure that was super-fast in one language might not work so well anymore.
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						%timeit is your friend
-						```python
-						# python
-						%timeit your_function
-						```
-						vs.
-						```java
-						// java (no mocking intended)
-						long start = System.nanoTime();
-						your_function();
-						long elapsedTime = System.nanoTime() - start;
-						System.out.println(elapsedTime/1000000);
-						```
+							Note:
+							Always be curious when you are programming, especially if you have moved to a new language.<br/>
+							The same structure that was super-fast in one language might not work so well anymore.
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							%timeit is your friend
+							```python
+							# python
+							%timeit your_function
+							```
+							vs.
+							```java
+							// java (no mocking intended)
+							long start = System.nanoTime();
+							your_function();
+							long elapsedTime = System.nanoTime() - start;
+							System.out.println(elapsedTime/1000000);
+							```
 
-						Note:
-						When in doubts - use timeit. It's just one line of code if you are using IPython (and you should be using IPython)'.
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						Sometimes a good algorithm or data structure is the best optimization
+							Note:
+							When in doubts - use timeit.<br/>
+							It's just one line of code if you are using IPython (and you should be using IPython)'.
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							Sometimes a good algorithm or data structure is the best optimization
 
-						Note:
-						And before you start thinking about changing the interpreter to squize additional 10% of speed improvement, make sure that your code is fine.
-					</script>
+							Note:
+							And before you start thinking about changing the interpreter to squize additional 10% of speed improvement, make sure that your code is fine.
+						</script>
+					</section>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
 						## Thank you
 						![](./img/get_over_9000.jpg)
+						<p style="position: absolute; right: 28%; top: 80%; font-size: 16px;">[source: http://www.neatoshop.com/product/Get-Over-9000]</p>
 
 						You liked it ? Let me know (there can be more).
 					</script>
